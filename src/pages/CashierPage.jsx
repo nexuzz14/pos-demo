@@ -249,11 +249,6 @@ export function CashierPage({ printerService, printerConnected, onShowToast }) {
                       <span className="text-xs font-bold text-neutral-900 dark:text-white">
                         {formatCurrency(product.price)}
                       </span>
-                      {product.stock !== undefined && (
-                        <span className="text-[10px] text-neutral-400 font-mono">
-                          Stok: {product.stock}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </button>
