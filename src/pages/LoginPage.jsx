@@ -78,11 +78,39 @@ export function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition-colors disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition-colors disabled:opacity-50 cursor-pointer"
             >
               {isLoading ? 'Memproses...' : 'Masuk'}
             </button>
           </form>
+
+          {/* Quick Fill Akun Demo */}
+          <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mb-3 font-medium">
+              💡 Klik untuk isi akun demo otomatis:
+            </p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => { setEmail('admin@bakebliss.com'); setPassword('demo123456'); }}
+                className="p-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/50 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-medium transition-all text-center border border-indigo-200/50 dark:border-indigo-800/50 cursor-pointer"
+              >
+                <div className="font-bold">👑 Admin Demo</div>
+                <div className="text-[10px] opacity-75 mt-0.5">admin@bakebliss.com</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => { setEmail('kasir@bakebliss.com'); setPassword('demo123456'); }}
+                className="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-medium transition-all text-center border border-emerald-200/50 dark:border-emerald-800/50 cursor-pointer"
+              >
+                <div className="font-bold">🛒 Kasir Demo</div>
+                <div className="text-[10px] opacity-75 mt-0.5">kasir@bakebliss.com</div>
+              </button>
+            </div>
+            <p className="text-[11px] text-center text-gray-400 dark:text-gray-500 mt-2.5">
+              Password default: <code className="font-mono bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">demo123456</code>
+            </p>
+          </div>
         </div>
       </div>
     </div>

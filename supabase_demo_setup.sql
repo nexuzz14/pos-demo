@@ -229,3 +229,79 @@ INSERT INTO transaction_items (id, transaction_id, product_id, product_name, pri
 ('f1000001-0000-0000-0000-000000000006', 'e1000001-0000-0000-0000-000000000003', 'b1000001-0000-0000-0000-000000000007', 'Tiramisu Classic Jar', 38000, 2, 76000, now() - interval '2 hours'),
 ('f1000001-0000-0000-0000-000000000007', 'e1000001-0000-0000-0000-000000000003', 'b1000001-0000-0000-0000-000000000009', 'Iced Caramel Macchiato', 28000, 1, 28000, now() - interval '2 hours')
 ON CONFLICT (id) DO NOTHING;
+
+-- ==============================================================================
+-- 15. SEED USER DEMO (ADMIN & KASIR)
+-- Password untuk kedua akun di bawah adalah: demo123456
+-- Catatan: Jika query auth.users menghasilkan permission denied karena policy Supabase,
+-- Anda juga bisa membuat user via dashboard: Authentication -> Users -> Add User.
+-- ==============================================================================
+DO $$
+BEGIN
+  -- Insert Admin
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'admin@bakebliss.com') THEN
+    INSERT INTO auth.users (
+      instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+      raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+    ) VALUES (
+      '00000000-0000-0000-0000-000000000000',
+      'a1000001-0000-0000-0000-000000000001',
+      'authenticated', 'authenticated',
+      'admin@bakebliss.com',
+      crypt('demo123456', gen_salt('bf')),
+      now(),
+      '{"provider":"email","providers":["email"]}',
+      '{"full_name":"Demo Administrator"}',
+      now(), now()
+    );
+
+    INSERT INTO auth.identities (
+      id, user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at
+    ) VALUES (
+      'a1000001-0000-0000-0000-000000000001',
+      'a1000001-0000-0000-0000-000000000001',
+      format('{"sub":"%s","email":"%s"}', 'a1000001-0000-0000-0000-000000000001', 'admin@bakebliss.com')::jsonb,
+      'email', 'admin@bakebliss.com', now(), now(), now()
+    );
+
+    INSERT INTO profiles (id, email, full_name, role_id) VALUES
+    ('a1000001-0000-0000-0000-000000000001', 'admin@bakebliss.com', 'Demo Administrator', 1)
+    ON CONFLICT (id) DO UPDATE SET role_id = 1;
+  END IF;
+
+  -- Insert Kasir
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'kasir@bakebliss.com') THEN
+    INSERT INTO auth.users (
+      instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+      raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+    ) VALUES (
+      '00000000-0000-0000-0000-000000000000',
+      'a1000001-0000-0000-0000-000000000002',
+      'authenticated', 'authenticated',
+      'kasir@bakebliss.com',
+      crypt('demo123456', gen_salt('bf')),
+      now(),
+      '{"provider":"email","providers":["email"]}',
+      '{"full_name":"Demo Kasir"}',
+      now(), now()
+    );
+
+    INSERT INTO auth.identities (
+      id, user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at
+    ) VALUES (
+      'a1000001-0000-0000-0000-000000000002',
+      'a1000001-0000-0000-0000-000000000002',
+      format('{"sub":"%s","email":"%s"}', 'a1000001-0000-0000-0000-000000000002', 'kasir@bakebliss.com')::jsonb,
+      'email', 'kasir@bakebliss.com', now(), now(), now()
+    );
+
+    INSERT INTO profiles (id, email, full_name, role_id) VALUES
+    ('a1000001-0000-0000-0000-000000000002', 'kasir@bakebliss.com', 'Demo Kasir', 2)
+    ON CONFLICT (id) DO UPDATE SET role_id = 2;
+  END IF;
+EXCEPTION
+  WHEN OTHERS THEN
+    -- Fallback jika Supabase membatasi direct DML pada auth schema
+    RAISE NOTICE 'Catatan: Pembuatan user via auth.users dilewati (%.%). Silakan tambahkan user via Authentication > Users pada dashboard Supabase jika belum ada.', SQLSTATE, SQLERRM;
+END $$;
+
