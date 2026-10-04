@@ -123,63 +123,63 @@ export function TransactionsPage({ printerService, printerConnected, onShowToast
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div>
-            <h2 className="text-2xl font-bold">Riwayat Transaksi</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Semua aktivitas penjualan</p>
+            <h2 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">Riwayat Transaksi</h2>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">Arsip dan cetak ulang nota penjualan kasir</p>
           </div>
           <button 
             onClick={() => setShowMoney(!showMoney)}
-            className="p-2 ml-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 transition-all shadow-sm"
+            className="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer"
             title={showMoney ? "Sembunyikan Saldo" : "Tampilkan Saldo"}
           >
-            {showMoney ? <Eye size={20} /> : <EyeOff size={20} />}
+            {showMoney ? <Eye size={15} /> : <EyeOff size={15} />}
           </button>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200/80 dark:border-neutral-800 shadow-xs">
           <div className="flex items-center gap-2 mb-2">
-            <BarChart2 size={16} className="text-indigo-500" />
-            <span className="text-xs text-gray-500 font-medium">Transaksi</span>
+            <BarChart2 size={16} className="text-neutral-400" />
+            <span className="text-xs text-neutral-500 font-medium">Transaksi</span>
           </div>
-          <p className="text-2xl font-bold">{stats.count}</p>
+          <p className="text-xl font-bold font-mono text-neutral-900 dark:text-white">{stats.count}</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200/80 dark:border-neutral-800 shadow-xs">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp size={16} className="text-emerald-500" />
-            <span className="text-xs text-gray-500 font-medium">Total</span>
+            <span className="text-xs text-neutral-500 font-medium">Total</span>
           </div>
-          <p className="text-base font-bold text-emerald-600 dark:text-emerald-400 truncate">{displayMoney(stats.total)}</p>
+          <p className="text-base font-bold font-mono text-emerald-600 dark:text-emerald-400 truncate">{displayMoney(stats.total)}</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200/80 dark:border-neutral-800 shadow-xs">
           <div className="flex items-center gap-2 mb-2">
-            <ShoppingBag size={16} className="text-purple-500" />
-            <span className="text-xs text-gray-500 font-medium">Rata-rata</span>
+            <ShoppingBag size={16} className="text-neutral-400" />
+            <span className="text-xs text-neutral-500 font-medium">Rata-rata</span>
           </div>
-          <p className="text-base font-bold text-purple-600 dark:text-purple-400 truncate">{displayMoney(stats.avg)}</p>
+          <p className="text-base font-bold font-mono text-neutral-900 dark:text-white truncate">{displayMoney(stats.avg)}</p>
         </div>
       </div>
 
       {/* Filter + Search */}
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex gap-2 overflow-x-auto">
+        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
           {FILTERS.map(f => (
             <button key={f.key} onClick={() => setFilter(f.key)}
-              className={`px-4 py-2 rounded-xl font-semibold text-sm whitespace-nowrap transition-colors ${
+              className={`px-3 py-1.5 rounded-xl font-medium text-xs whitespace-nowrap transition-colors cursor-pointer border ${
                 filter === f.key
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-indigo-300'
+                  ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 border-transparent shadow-xs'
+                  : 'bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:border-neutral-300'
               }`}>
               {f.label}
             </button>
           ))}
         </div>
         <div className="relative flex-1">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input type="text" value={search} placeholder="Cari no. transaksi..."
+          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <input type="text" value={search} placeholder="Cari nomor nota transaksi..."
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-800 outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white text-xs shadow-xs"
           />
         </div>
       </div>
@@ -187,43 +187,43 @@ export function TransactionsPage({ printerService, printerConnected, onShowToast
       {/* List */}
       {loading ? (
         <div className="space-y-3">
-          {[...Array(4)].map((_, i) => <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-2xl animate-pulse" />)}
+          {[...Array(4)].map((_, i) => <div key={i} className="h-18 bg-neutral-200/60 dark:bg-neutral-800/60 rounded-2xl animate-pulse" />)}
         </div>
       ) : filteredTransactions.length === 0 ? (
-        <div className="py-16 text-center text-gray-400">
-          <Receipt size={48} className="mx-auto mb-3 opacity-30" />
-          <p>{search ? 'Transaksi tidak ditemukan' : filter !== 'all' ? 'Belum ada transaksi di periode ini' : 'Belum ada transaksi'}</p>
+        <div className="py-16 text-center text-neutral-400 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200/80 dark:border-neutral-800">
+          <Receipt size={36} className="mx-auto mb-2 text-neutral-300 dark:text-neutral-700" />
+          <p className="text-xs">{search ? 'Transaksi tidak ditemukan' : filter !== 'all' ? 'Belum ada transaksi di periode ini' : 'Belum ada transaksi'}</p>
         </div>
       ) : (
         <div className="space-y-2.5">
           {filteredTransactions.map(trx => (
             <div key={trx.id}
               onClick={() => setSelectedTransaction(trx)}
-              className="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 cursor-pointer transition-all hover:shadow-md">
+              className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 cursor-pointer transition-all hover:shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-mono text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white">
                       {trx.transaction_no}
                     </span>
                     {trx.shipping_cost > 0 && (
-                      <span className="inline-flex items-center gap-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-2 py-0.5 rounded">
                         <Truck size={10} /> Ongkir
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <div className="flex items-center gap-2 text-[11px] text-neutral-400">
                     <Calendar size={11} />
                     <span>{formatDate(trx.created_at)} · {formatTime(trx.created_at)}</span>
-                    <span className="text-gray-300 dark:text-gray-600">•</span>
+                    <span>•</span>
                     <span className="flex items-center gap-1"><Package size={11} /> {trx.items?.length || 0} item</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">
-                    <p className="font-bold text-emerald-600 dark:text-emerald-400">{displayMoney(trx.grand_total)}</p>
+                    <p className="font-bold text-sm text-neutral-900 dark:text-white font-mono">{displayMoney(trx.grand_total)}</p>
                   </div>
-                  <ChevronRight size={18} className="text-gray-300 dark:text-gray-600" />
+                  <ChevronRight size={16} className="text-neutral-400" />
                 </div>
               </div>
             </div>
@@ -233,38 +233,38 @@ export function TransactionsPage({ printerService, printerConnected, onShowToast
 
       {/* Modal Detail */}
       {selectedTransaction && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 antialiased">
+          <div className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl border border-neutral-200 dark:border-neutral-800">
             {/* Header */}
-            <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between sticky top-0 bg-white dark:bg-gray-800 rounded-t-2xl">
+            <div className="p-4 px-5 border-b border-neutral-100 dark:border-neutral-800 flex items-center justify-between sticky top-0 bg-white dark:bg-neutral-900">
               <div>
-                <h2 className="text-lg font-bold">Detail Transaksi</h2>
-                <p className="text-xs font-mono text-indigo-600 dark:text-indigo-400">{selectedTransaction.transaction_no}</p>
+                <h2 className="text-sm font-bold tracking-tight">Detail Transaksi</h2>
+                <p className="text-xs font-mono text-neutral-400 mt-0.5">{selectedTransaction.transaction_no}</p>
               </div>
               <button onClick={() => setSelectedTransaction(null)}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors">
-                <X size={20} />
+                className="p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer">
+                <X size={18} />
               </button>
             </div>
 
             <div className="p-5 space-y-4">
               {/* Waktu */}
-              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                <Calendar size={14} />
-                {formatDate(selectedTransaction.created_at)} · {formatTime(selectedTransaction.created_at)}
+              <div className="flex items-center gap-2 text-xs text-neutral-400">
+                <Calendar size={13} />
+                <span>{formatDate(selectedTransaction.created_at)} · {formatTime(selectedTransaction.created_at)}</span>
               </div>
 
               {/* Items */}
               <div>
-                <h3 className="font-semibold text-sm mb-2 text-gray-500 uppercase tracking-wide">Items</h3>
-                <div className="space-y-2">
+                <h3 className="text-[11px] font-semibold mb-2 text-neutral-400 uppercase tracking-wider font-mono">Daftar Produk</h3>
+                <div className="space-y-1.5 divide-y divide-neutral-100 dark:divide-neutral-800/60">
                   {selectedTransaction.items?.map((item, i) => (
-                    <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+                    <div key={i} className="pt-1.5 first:pt-0 flex justify-between items-center text-xs">
                       <div>
-                        <p className="font-medium text-sm">{item.product_name || item.name}</p>
-                        <p className="text-xs text-gray-400">{formatCurrency(item.price)} × {item.qty}</p>
+                        <p className="font-semibold text-neutral-900 dark:text-white">{item.product_name || item.name}</p>
+                        <p className="text-[11px] text-neutral-400 font-mono">{formatCurrency(item.price)} × {item.qty}</p>
                       </div>
-                      <p className="font-bold text-sm text-indigo-600 dark:text-indigo-400">
+                      <p className="font-bold font-mono text-neutral-900 dark:text-white">
                         {formatCurrency(item.price * item.qty)}
                       </p>
                     </div>
@@ -273,36 +273,36 @@ export function TransactionsPage({ printerService, printerConnected, onShowToast
               </div>
 
               {/* Summary */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 space-y-2">
-                <div className="flex justify-between text-sm text-gray-500">
+              <div className="bg-neutral-50 dark:bg-neutral-800/50 rounded-xl p-3.5 space-y-1.5 text-xs border border-neutral-200/60 dark:border-neutral-700/60">
+                <div className="flex justify-between text-neutral-500">
                   <span>Subtotal</span>
-                  <span>{formatCurrency(selectedTransaction.total)}</span>
+                  <span className="font-semibold text-neutral-800 dark:text-neutral-200 font-mono">{formatCurrency(selectedTransaction.total)}</span>
                 </div>
                 {selectedTransaction.shipping_cost > 0 && (
-                  <div className="flex justify-between text-sm text-gray-500">
-                    <span className="flex items-center gap-1"><Truck size={12} /> Ongkir</span>
-                    <span>{formatCurrency(selectedTransaction.shipping_cost)}</span>
+                  <div className="flex justify-between text-neutral-500">
+                    <span className="flex items-center gap-1"><Truck size={11} /> Ongkir</span>
+                    <span className="font-mono">{formatCurrency(selectedTransaction.shipping_cost)}</span>
                   </div>
                 )}
-                <div className="flex justify-between font-bold text-base pt-2 border-t border-gray-200 dark:border-gray-600">
-                  <span>Total</span>
-                  <span className="text-emerald-600 dark:text-emerald-400">{formatCurrency(selectedTransaction.grand_total)}</span>
+                <div className="flex justify-between font-bold text-sm pt-2 border-t border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white">
+                  <span>Total Tagihan</span>
+                  <span className="font-mono">{formatCurrency(selectedTransaction.grand_total)}</span>
                 </div>
-                <div className="flex justify-between text-sm text-gray-500">
-                  <span>Bayar</span>
-                  <span>{formatCurrency(selectedTransaction.paid)}</span>
+                <div className="flex justify-between text-neutral-500">
+                  <span>Nominal Bayar</span>
+                  <span className="font-mono">{formatCurrency(selectedTransaction.paid)}</span>
                 </div>
-                <div className="flex justify-between text-sm font-semibold">
-                  <span>Kembali</span>
-                  <span className="text-emerald-600 dark:text-emerald-400">{formatCurrency(selectedTransaction.change)}</span>
+                <div className="flex justify-between font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span>Kembalian</span>
+                  <span className="font-mono">{formatCurrency(selectedTransaction.change)}</span>
                 </div>
               </div>
 
               {/* Reprint */}
               <button onClick={() => handleReprint(selectedTransaction)} disabled={printing}
-                className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center justify-center gap-2 disabled:opacity-50 transition-colors">
-                <Printer size={18} />
-                {printing ? 'Mencetak...' : 'Cetak Ulang Nota'}
+                className="w-full py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 text-white font-semibold text-xs flex items-center justify-center gap-2 disabled:opacity-50 transition-colors cursor-pointer shadow-xs">
+                <Printer size={15} />
+                <span>{printing ? 'Mencetak...' : 'Cetak Ulang Nota'}</span>
               </button>
             </div>
           </div>

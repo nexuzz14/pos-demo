@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, Truck } from 'lucide-react';
+import { Receipt, Truck } from 'lucide-react';
 import { formatCurrency } from '../utils/formatCurrency';
 
 export function PaymentSection({ 
@@ -14,116 +14,81 @@ export function PaymentSection({
   loading 
 }) {
   return (
-    <div className="
-      rounded-lg p-4
-      bg-white text-gray-900
-      dark:bg-gray-800 dark:text-white
-    ">
-      <div className="space-y-3 mb-4">
+    <div className="rounded-2xl p-4 bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 text-neutral-900 dark:text-white space-y-4 shadow-xs">
+      {/* Subtotal */}
+      <div className="flex justify-between text-xs text-neutral-500">
+        <span>Subtotal:</span>
+        <span className="font-semibold text-neutral-800 dark:text-neutral-200">{formatCurrency(subtotal)}</span>
+      </div>
 
-        {/* Subtotal */}
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-600 dark:text-gray-400">Subtotal:</span>
-          <span className="font-semibold">{formatCurrency(subtotal)}</span>
+      {/* Ongkir */}
+      <div className="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200/60 dark:border-neutral-800 space-y-2">
+        <label className="flex items-center gap-2 text-xs font-semibold text-neutral-700 dark:text-neutral-300">
+          <Truck size={14} className="text-neutral-500" />
+          <span>Biaya Pengiriman:</span>
+        </label>
+
+        <input
+          type="number"
+          value={shippingCost || ''}
+          onChange={(e) => onShippingCostChange(parseInt(e.target.value) || 0)}
+          className="w-full rounded-lg px-3 py-1.5 text-xs font-semibold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white outline-none focus:ring-1 focus:ring-neutral-900 dark:focus:ring-white"
+          placeholder="0"
+          min="0"
+        />
+
+        <div className="flex gap-1.5 pt-1">
+          {[5000, 10000, 15000, 20000].map(value => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => onShippingCostChange(value)}
+              className="flex-1 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
+            >
+              {value / 1000}k
+            </button>
+          ))}
         </div>
+      </div>
 
-        {/* Ongkir */}
-        <div className="
-          p-3 rounded-lg
-          bg-gray-100 dark:bg-gray-700
-        ">
-          <label className="flex items-center gap-2 text-sm mb-2">
-            <Truck size={16} className="text-blue-500 dark:text-blue-400" />
-            <span className="font-medium">Ongkos Kirim:</span>
-          </label>
+      {/* Grand Total */}
+      <div className="flex justify-between text-sm font-bold pt-2 border-t border-neutral-200/60 dark:border-neutral-800">
+        <span>TOTAL TAGIHAN:</span>
+        <span className="font-mono">{formatCurrency(grandTotal)}</span>
+      </div>
 
-          <input
-            type="number"
-            value={shippingCost}
-            onChange={(e) =>
-              onShippingCostChange(parseInt(e.target.value) || 0)
-            }
-            className="
-              w-full rounded p-2 text-sm font-medium
-              bg-white border border-gray-300
-              dark:bg-gray-600 dark:border-gray-500
-            "
-            placeholder="0"
-            min="0"
-          />
+      {/* Uang Bayar */}
+      <div>
+        <label className="block text-[11px] font-semibold uppercase tracking-wider text-neutral-500 mb-1">
+          Nominal Pembayaran:
+        </label>
+        <input
+          type="number"
+          value={paid}
+          onChange={(e) => onPaidChange(e.target.value)}
+          className="w-full rounded-xl px-3 py-2 text-base font-bold text-right bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white font-mono"
+          placeholder="0"
+        />
+      </div>
 
-          <div className="flex gap-2 mt-2">
-            {[5000, 10000, 15000, 20000].map(value => (
-              <button
-                key={value}
-                onClick={() => onShippingCostChange(value)}
-                className="
-                  flex-1 p-1.5 rounded text-xs font-medium
-                  bg-gray-200 hover:bg-gray-300
-                  dark:bg-gray-600 dark:hover:bg-gray-500
-                "
-              >
-                {value / 1000}K
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Grand Total */}
-        <div className="
-          flex justify-between text-lg font-bold pt-3
-          border-t border-gray-200
-          dark:border-gray-700
-        ">
-          <span>TOTAL:</span>
-          <span className="text-blue-600 dark:text-blue-400">
-            {formatCurrency(grandTotal)}
+      {/* Kembalian */}
+      {parseInt(paid) >= grandTotal && (
+        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/80 rounded-xl p-3 flex justify-between items-center text-xs">
+          <span className="font-semibold text-emerald-800 dark:text-emerald-300">Kembalian:</span>
+          <span className="text-base font-bold text-emerald-700 dark:text-emerald-400 font-mono">
+            {formatCurrency(change)}
           </span>
         </div>
-
-        {/* Uang Bayar */}
-        <div>
-          <label className="block text-sm mb-1">
-            Uang Bayar:
-          </label>
-          <input
-            type="number"
-            value={paid}
-            onChange={(e) => onPaidChange(e.target.value)}
-            className="
-              w-full rounded p-3 text-lg font-bold
-              bg-white border border-gray-300
-              dark:bg-gray-700 dark:border-gray-600
-            "
-            placeholder="0"
-            autoFocus
-          />
-        </div>
-
-        {/* Kembalian */}
-        {parseInt(paid) >= grandTotal && (
-          <div className="flex justify-between text-lg font-bold text-green-600 dark:text-green-400">
-            <span>KEMBALI:</span>
-            <span>{formatCurrency(change)}</span>
-          </div>
-        )}
-      </div>
+      )}
 
       {/* Button Bayar */}
       <button
         onClick={onPayment}
         disabled={parseInt(paid) < grandTotal || loading}
-        className="
-          w-full p-4 rounded-lg font-bold text-lg
-          flex items-center justify-center gap-2
-          bg-green-600 hover:bg-green-700
-          text-white
-          disabled:bg-gray-400 dark:disabled:bg-gray-600
-          disabled:cursor-not-allowed
-        "
+        className="w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer shadow-xs"
       >
-        <DollarSign size={24} />
-        {loading ? 'Memproses...' : 'Bayar & Cetak Nota'}
+        <Receipt size={16} />
+        <span>{loading ? 'Memproses Transaksi...' : 'Bayar & Selesaikan'}</span>
       </button>
     </div>
   );

@@ -5,6 +5,7 @@ import { ProductsPage } from './pages/ProductsPage';
 import { TransactionsPage } from './pages/TransactionsPage';
 import { BluetoothPrinterService } from './services/bluetoothPrinterService';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { CashFlowPage } from './pages/CashFlowPage';
@@ -68,8 +69,9 @@ export default function App() {
   };
 
   return (
-    <AuthProvider>
-      <Router>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
         <Routes>
           {/* Public Route */}
           <Route path="/login" element={<LoginPage />} />
@@ -173,5 +175,6 @@ export default function App() {
         </Routes>
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }

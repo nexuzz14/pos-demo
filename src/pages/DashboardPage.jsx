@@ -6,12 +6,15 @@ import {
   Tooltip, ResponsiveContainer, Cell
 } from 'recharts';
 import { TrendingUp, ShoppingBag, DollarSign, ArrowUpRight, ArrowDownRight, Package, Eye, EyeOff, Calendar } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
-const COLORS = ['#18181b', '#3f3f46', '#71717a', '#a1a1aa', '#d4d4d8'];
+const COLORS_LIGHT = ['#18181b', '#3f3f46', '#71717a', '#a1a1aa', '#d4d4d8'];
+const COLORS_DARK = ['#f4f4f5', '#d4d4d8', '#a1a1aa', '#71717a', '#52525b'];
 const MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 const YEARS = [2024, 2025, 2026, 2027, 2028];
 
 export function DashboardPage() {
+  const { isDark } = useTheme();
   const currentDate = new Date();
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
@@ -290,14 +293,14 @@ export function DashboardPage() {
             <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#18181b" stopOpacity={0.15} />
-                  <stop offset="95%" stopColor="#18181b" stopOpacity={0} />
+                  <stop offset="5%" stopColor={isDark ? '#fafafa' : '#18181b'} stopOpacity={isDark ? 0.25 : 0.15} />
+                  <stop offset="95%" stopColor={isDark ? '#fafafa' : '#18181b'} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" strokeOpacity={0.4} vertical={false} />
-              <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#a1a1aa' }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#27272a' : '#e5e5e5'} strokeOpacity={0.6} vertical={false} />
+              <XAxis dataKey="label" tick={{ fontSize: 11, fill: isDark ? '#71717a' : '#a1a1aa' }} axisLine={false} tickLine={false} />
               <YAxis 
-                tick={{ fontSize: 11, fill: '#a1a1aa' }} 
+                tick={{ fontSize: 11, fill: isDark ? '#71717a' : '#a1a1aa' }} 
                 axisLine={false} 
                 tickLine={false}
                 tickFormatter={v => v >= 1000000 ? `${(v/1000000).toFixed(1)}jt` : v >= 1000 ? `${(v/1000).toFixed(0)}rb` : v} 
@@ -306,10 +309,10 @@ export function DashboardPage() {
               <Area 
                 type="monotone" 
                 dataKey="total" 
-                stroke="#18181b" 
+                stroke={isDark ? '#fafafa' : '#18181b'} 
                 strokeWidth={2}
                 fill="url(#salesGrad)" 
-                dot={{ fill: '#18181b', r: 2.5 }} 
+                dot={{ fill: isDark ? '#fafafa' : '#18181b', r: 2.5 }} 
                 activeDot={{ r: 5 }} 
               />
             </AreaChart>

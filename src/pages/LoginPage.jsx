@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Store, Shield, ShoppingCart, ArrowRight, Lock, Mail } from 'lucide-react';
+import { Store, Shield, ShoppingCart, ArrowRight, Lock, Mail, Sun, Moon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ export function LoginPage() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { login, user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -33,7 +35,16 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-100/70 dark:bg-neutral-950 p-4 antialiased">
+    <div className="min-h-screen relative flex items-center justify-center bg-neutral-100/70 dark:bg-neutral-950 p-4 antialiased">
+      {/* Floating Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="absolute top-5 right-5 p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer shadow-xs"
+        title="Toggle Theme"
+      >
+        {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+      </button>
+
       <div className="max-w-md w-full bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-200/80 dark:border-neutral-800 overflow-hidden">
         <div className="p-8">
           

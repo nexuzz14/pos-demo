@@ -5,17 +5,14 @@ import {
   Sun, Moon, Printer, Wallet, FlaskConical, UserCog, Store, ChevronRight 
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { Toast } from './Toast';
 
 export function Layout({ printerService, printerConnected, connectPrinter, loading, toast, setToast }) {
   const { role, logout, user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
 
   const handleLogout = async () => {
     try {
@@ -107,7 +104,7 @@ export function Layout({ printerService, printerConnected, connectPrinter, loadi
         {/* Footer Utilities */}
         <div className="p-3 border-t border-neutral-200/80 dark:border-neutral-800 space-y-1">
           <button
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            onClick={toggleTheme}
             className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60 transition-colors cursor-pointer"
           >
             {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
@@ -138,7 +135,7 @@ export function Layout({ printerService, printerConnected, connectPrinter, loadi
           
           <div className="flex gap-1.5 items-center">
             <button
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              onClick={toggleTheme}
               className="p-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
             >
               {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
