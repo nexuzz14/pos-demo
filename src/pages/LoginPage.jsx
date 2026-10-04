@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Store, Shield, ShoppingCart, ArrowRight, Lock, Mail } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export function LoginPage() {
@@ -12,7 +13,7 @@ export function LoginPage() {
 
   React.useEffect(() => {
     if (user) {
-      navigate('/cashier'); // or '/' depending on role, but cashier is safe
+      navigate('/cashier');
     }
   }, [user, navigate]);
 
@@ -25,92 +26,119 @@ export function LoginPage() {
       await login(email, password);
       navigate('/');
     } catch (err) {
-      setError(err.message || 'Login gagal. Periksa email dan password Anda.');
+      setError(err.message || 'Login gagal. Periksa kembali email dan kata sandi Anda.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-neutral-100/70 dark:bg-neutral-950 p-4 antialiased">
+      <div className="max-w-md w-full bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-200/80 dark:border-neutral-800 overflow-hidden">
         <div className="p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">🍰 BakeBliss</h1>
-            <p className="text-gray-500 dark:text-gray-400">Masuk ke sistem POS</p>
+          
+          {/* Brand Header */}
+          <div className="flex flex-col items-center text-center mb-8">
+            <div className="w-12 h-12 rounded-2xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 flex items-center justify-center mb-3.5 shadow-sm">
+              <Store size={24} strokeWidth={2.2} />
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              BakeBliss POS
+            </h1>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+              Sistem Kasir & Manajemen Toko
+            </p>
           </div>
 
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl mb-6 text-sm">
+            <div className="bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 p-3.5 rounded-xl mb-6 text-xs font-medium">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email
+              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-1.5">
+                Alamat Email
               </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white outline-none transition-all"
-                placeholder="admin@bakebliss.com"
-                required
-              />
+              <div className="relative">
+                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800 text-neutral-900 dark:text-white placeholder-neutral-400 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white transition-all"
+                  placeholder="admin@bakebliss.com"
+                  required
+                />
+              </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Password
+              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-1.5">
+                Kata Sandi
               </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white outline-none transition-all"
-                placeholder="••••••••"
-                required
-              />
+              <div className="relative">
+                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800 text-neutral-900 dark:text-white placeholder-neutral-400 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white transition-all"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition-colors disabled:opacity-50 cursor-pointer"
+              className="w-full mt-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 text-white font-medium py-2.5 px-4 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm cursor-pointer shadow-xs"
             >
-              {isLoading ? 'Memproses...' : 'Masuk'}
+              <span>{isLoading ? 'Memproses...' : 'Masuk ke Sistem'}</span>
+              {!isLoading && <ArrowRight size={15} />}
             </button>
           </form>
 
-          {/* Quick Fill Akun Demo */}
-          <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
-            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mb-3 font-medium">
-              💡 Klik untuk isi akun demo otomatis:
-            </p>
-            <div className="grid grid-cols-2 gap-2 text-xs">
+          {/* Quick Demo Credentials */}
+          <div className="mt-8 pt-6 border-t border-neutral-100 dark:border-neutral-800">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-mono tracking-wider uppercase text-neutral-400 dark:text-neutral-500 font-semibold">
+                Akun Demo Cepat
+              </span>
+              <span className="text-[11px] text-neutral-400 font-mono">
+                Sandi: demo123456
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => { setEmail('admin@bakebliss.com'); setPassword('demo123456'); }}
-                className="p-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/50 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-medium transition-all text-center border border-indigo-200/50 dark:border-indigo-800/50 cursor-pointer"
+                className="p-3 rounded-xl border border-neutral-200 dark:border-neutral-700/80 bg-neutral-50 dark:bg-neutral-800/40 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-left transition-all cursor-pointer group"
               >
-                <div className="font-bold">👑 Admin Demo</div>
-                <div className="text-[10px] opacity-75 mt-0.5">admin@bakebliss.com</div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">Admin</span>
+                  <Shield size={13} className="text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors" />
+                </div>
+                <div className="text-[11px] text-neutral-500 truncate">admin@bakebliss.com</div>
               </button>
+
               <button
                 type="button"
                 onClick={() => { setEmail('kasir@bakebliss.com'); setPassword('demo123456'); }}
-                className="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-medium transition-all text-center border border-emerald-200/50 dark:border-emerald-800/50 cursor-pointer"
+                className="p-3 rounded-xl border border-neutral-200 dark:border-neutral-700/80 bg-neutral-50 dark:bg-neutral-800/40 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-left transition-all cursor-pointer group"
               >
-                <div className="font-bold">🛒 Kasir Demo</div>
-                <div className="text-[10px] opacity-75 mt-0.5">kasir@bakebliss.com</div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">Kasir</span>
+                  <ShoppingCart size={13} className="text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors" />
+                </div>
+                <div className="text-[11px] text-neutral-500 truncate">kasir@bakebliss.com</div>
               </button>
             </div>
-            <p className="text-[11px] text-center text-gray-400 dark:text-gray-500 mt-2.5">
-              Password default: <code className="font-mono bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">demo123456</code>
-            </p>
           </div>
+
         </div>
       </div>
     </div>

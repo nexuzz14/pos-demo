@@ -181,8 +181,8 @@ export function UsersPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">👥 Kelola User</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Tambah, edit role, dan hapus pengguna</p>
+          <h2 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">Manajemen Pengguna</h2>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">Pengaturan akun, peran staf, dan akses operasional</p>
         </div>
         <button
           onClick={() => { setShowAddForm(true); setEditUser(null); }}
@@ -257,7 +257,7 @@ export function UsersPage() {
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 dark:bg-gray-700 outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-10">
                     {roles.map(r => (
                       <option key={r.id} value={r.id}>
-                        {r.name === 'admin' ? '🛡 Admin' : '🛒 Kasir'}
+                        {r.name === 'admin' ? 'Administrator' : 'Kasir'}
                       </option>
                     ))}
                   </select>

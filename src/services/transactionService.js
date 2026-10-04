@@ -3,7 +3,7 @@ import { supabase } from './supabase';
 export const transactionService = {
   async create(data) {
     try {
-      // ✅ INSERT TRANSACTION (transaction_no akan digenerate otomatis oleh Database Trigger Supabase)
+      // 1. INSERT TRANSACTION (transaction_no digenerate otomatis oleh Database Trigger Supabase)
       const { data: trx, error } = await supabase
         .from('transactions')
         .insert([{
@@ -21,7 +21,7 @@ export const transactionService = {
       
       const transactionNo = trx.transaction_no; // Ambil nomor hasil generate dari Supabase
 
-      // ✅ INSERT ITEMS
+      // 2. INSERT ITEMS
       const items = data.items.map(item => ({
         transaction_id: trx.id,
         product_id: item.id,
@@ -37,7 +37,7 @@ export const transactionService = {
 
       if (itemError) throw itemError;
 
-      // ✅ AUTO INSERT CASH FLOW (uang masuk dari penjualan)
+      // 3. AUTO INSERT CASH FLOW (uang masuk dari penjualan)
       try {
         const { data: { user } } = await supabase.auth.getUser();
         await supabase.from('cash_flow').insert({

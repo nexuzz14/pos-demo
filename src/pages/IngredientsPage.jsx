@@ -139,8 +139,8 @@ export function IngredientsPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div>
-            <h2 className="text-2xl font-bold">🥣 Bahan</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Manajemen stok bahan baku</p>
+            <h2 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">Inventaris Bahan</h2>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">Manajemen dan pemantauan stok bahan baku</p>
           </div>
           <button 
             onClick={() => setShowMoney(!showMoney)}
@@ -170,12 +170,12 @@ export function IngredientsPage() {
 
       {/* Low Stock Alert */}
       {lowStockCount > 0 && (
-        <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-2xl p-4 flex items-center gap-3">
-          <AlertTriangle size={20} className="text-orange-500 flex-shrink-0" />
-          <p className="text-sm font-medium text-orange-700 dark:text-orange-400">
-            ⚠️ <strong>{lowStockCount} bahan</strong> memiliki stok di bawah batas minimum!
-            <button onClick={() => setShowLowStockOnly(true)} className="ml-2 underline">
-              Lihat
+        <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 flex items-center gap-3">
+          <AlertTriangle size={18} className="text-amber-600 dark:text-amber-400 flex-shrink-0" />
+          <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
+            Peringatan: <strong>{lowStockCount} bahan baku</strong> berada di bawah batas minimum stok.
+            <button onClick={() => setShowLowStockOnly(true)} className="ml-2 font-semibold underline cursor-pointer">
+              Filter Bahan
             </button>
           </p>
         </div>

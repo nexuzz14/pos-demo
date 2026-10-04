@@ -87,8 +87,7 @@ export function TransactionsPage({ printerService, printerConnected, onShowToast
         <tr><td>KEMBALI:</td><td align="right">${formatCurrency(data.change)}</td></tr>
       </table>
       <div class="line"></div><div class="center">0881-0124-64949</div>
-      <div class="center">We love to hear your feedback (the sweet and the bitter one😋)</div>
-      <br><div class="center bold">Thank you!</div></body></html>
+      <div class="center" style="margin-top:6px;">Terima kasih atas kunjungan Anda</div></body></html>
     `);
     printWindow.document.close();
     printWindow.print();

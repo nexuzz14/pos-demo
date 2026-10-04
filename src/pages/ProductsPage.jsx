@@ -188,8 +188,12 @@ export function ProductsPage({ onShowToast }) {
             {filteredProducts.map(product => (
               <div key={product.id} className={`p-4 flex items-center justify-between transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50 ${!product.active ? 'opacity-60 bg-gray-50/50 dark:bg-gray-800/50' : ''}`}>
                 <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-sm ${product.active ? 'bg-gradient-to-br from-indigo-400 to-purple-500' : 'bg-gray-200 dark:bg-gray-700 grayscale'}`}>
-                    🍰
+                  <div className="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 overflow-hidden flex items-center justify-center shrink-0">
+                    {product.image_url ? (
+                      <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <Package size={20} className="text-neutral-400" />
+                    )}
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">

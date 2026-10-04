@@ -145,8 +145,8 @@ export function CashFlowPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div>
-            <h2 className="text-2xl font-bold">💰 Kas</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Pencatatan uang masuk & keluar</p>
+            <h2 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">Arus Kas</h2>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">Pencatatan kas masuk dan keluar operasional</p>
           </div>
           <button 
             onClick={() => setShowMoney(!showMoney)}
